@@ -177,22 +177,28 @@ namespace DirectoryCompare.UI
 
         private void buttonBrowseDirectorySource_Click(object sender, EventArgs e)
         {
-            var folderBrowserDialog = new FolderBrowserDialog();
-
-            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
-            {
-                textBoxSourceDirectory.Text = folderBrowserDialog.SelectedPath;
-            }
+            var dir = BrowseForDirectory();
+            textBoxSourceDirectory.Text = dir != string.Empty ? dir : textBoxSourceDirectory.Text;
         }
 
         private void buttonBrowseDirectoryCompare_Click(object sender, EventArgs e)
         {
+            var dir = BrowseForDirectory();
+            textBoxCompareDirectory.Text = dir != string.Empty ? dir : textBoxCompareDirectory.Text;
+        }
+
+        private string BrowseForDirectory()
+        {
             var folderBrowserDialog = new FolderBrowserDialog();
+
+            var result = string.Empty;
 
             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                textBoxCompareDirectory.Text = folderBrowserDialog.SelectedPath;
+                result = folderBrowserDialog.SelectedPath;
             }
+
+            return result;
         }
 
         private void buttonCompare_Click(object sender, EventArgs e)
