@@ -19,9 +19,6 @@ namespace DirectoryCompare.UI
         {
             InitializeComponent();
             ResetForm();
-
-            textBoxSourceDirectory.Text = @"C:\test1\";
-            textBoxCompareDirectory.Text = @"C:\test2\";
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -49,10 +46,10 @@ namespace DirectoryCompare.UI
             var recursive = checkBoxRecursive.Checked;
             try
             {
-                //TODO load source files
+                // load source files
                 SourceFiles = GetFiles(textBoxSourceDirectory.Text, recursive);
 
-                //TODO load compare files
+                // load compare files
                 CompareFiles = GetFiles(textBoxCompareDirectory.Text, recursive);
 
                 dataGridViewSourceFiles.DataSource = SourceFiles;
@@ -95,7 +92,7 @@ namespace DirectoryCompare.UI
 
                 if (compareFile != null)
                 {
-                    //TODO MD5 of both files to compare
+                    // MD5 of both files to compare
                     var sourceMd5 = CalculateMD5(sourceFile.FullName);
                     var compareMd5 = CalculateMD5(compareFile.FullName);
 
@@ -118,7 +115,7 @@ namespace DirectoryCompare.UI
                 }
                 else
                 {
-                    //TODO file doesn't exist, highlight green
+                    // file doesn't exist, highlight green
                     DataGridViewRow row = FindRow(sourceFile.FullName, dataGridViewSourceFiles);
 
                     DeletedFileRowStyle(row);
@@ -126,7 +123,7 @@ namespace DirectoryCompare.UI
             }
 
             var sourceFileNames = SourceFiles.Select(s => s.Name);
-            //TODO files that are in compare that aren't in source
+            // files that are in compare that aren't in source
             foreach (var compare in CompareFiles)
             {
                 if (!sourceFileNames.Contains(compare.Name))
