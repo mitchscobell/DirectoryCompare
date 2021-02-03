@@ -13,8 +13,8 @@ namespace DirectoryCompare.UI
 {
     public partial class MainForm : Form
     {
-        private FileInfo[] SourceFiles;
-        private FileInfo[] CompareFiles;
+        private List<FileInfo> SourceFiles = new List<FileInfo>();
+        private List<FileInfo> CompareFiles = new List<FileInfo>();
         public MainForm()
         {
             InitializeComponent();
@@ -34,21 +34,26 @@ namespace DirectoryCompare.UI
             textBoxSourceDirectory.Text = string.Empty;
             textBoxCompareDirectory.Text = string.Empty;
 
-            SourceFiles = null;
-            CompareFiles = null;
+            SourceFiles.Clear();
+            CompareFiles.Clear();
+
+            dataGridViewSourceFiles.DataSource = null;
+            dataGridViewCompareFiles.DataSource = null;
 
             checkBoxRecursive.Checked = false;
         }
 
         private void CompareDirectories()
         {
+
+            var recursive = checkBoxRecursive.Checked;
             try
             {
                 //TODO load source files
-                SourceFiles = GetFiles(textBoxSourceDirectory.Text);
+                SourceFiles = GetFiles(textBoxSourceDirectory.Text, recursive);
 
                 //TODO load compare files
-                CompareFiles = GetFiles(textBoxCompareDirectory.Text);
+                CompareFiles = GetFiles(textBoxCompareDirectory.Text, recursive);
 
                 dataGridViewSourceFiles.DataSource = SourceFiles;
                 dataGridViewCompareFiles.DataSource = CompareFiles;
@@ -61,10 +66,25 @@ namespace DirectoryCompare.UI
             }
         }
 
-        private FileInfo[] GetFiles(string directory)
+        private List<FileInfo> GetFiles(string directory, bool recursive = false)
         {
+            var files = new List<FileInfo>();
+
             var directoryInfo = new DirectoryInfo(directory);
-            return directoryInfo.GetFiles();
+
+            files.AddRange(directoryInfo.GetFiles());
+
+            if (recursive)
+            {
+                var childDirectories = directoryInfo.GetDirectories();
+
+                foreach (var dir in childDirectories)
+                {
+                    files.AddRange(GetFiles(dir.FullName, true));
+                }
+            }
+
+            return files;
         }
 
         private void HighlightDifferences()
@@ -79,8 +99,16 @@ namespace DirectoryCompare.UI
                     var sourceMd5 = CalculateMD5(sourceFile.FullName);
                     var compareMd5 = CalculateMD5(compareFile.FullName);
 
-                    //TODO if different highlight yellow
-                    if (sourceMd5 != compareMd5)
+                    var sourceLocalDirectory = sourceFile.FullName.Replace
+                        (textBoxSourceDirectory.Text, string.Empty);
+
+                    var compareLocalDirectory = compareFile.FullName.Replace
+                        (textBoxCompareDirectory.Text, string.Empty);
+
+
+                    // if different highlight yellow
+                    if (sourceMd5 != compareMd5 ||
+                        sourceLocalDirectory != compareLocalDirectory)
                     {
                         DataGridViewRow row = FindRow(compareFile.FullName, dataGridViewCompareFiles);
 
