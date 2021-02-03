@@ -29,6 +29,7 @@ namespace DirectoryCompare.UI
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -237,6 +238,9 @@ namespace DirectoryCompare.UI
             // 
             // groupBoxFiles
             // 
+            this.groupBoxFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxFiles.Controls.Add(this.splitContainer2);
             this.groupBoxFiles.Location = new System.Drawing.Point(12, 3);
             this.groupBoxFiles.Name = "groupBoxFiles";
@@ -265,6 +269,9 @@ namespace DirectoryCompare.UI
             // dataGridViewSourceFiles
             // 
             this.dataGridViewSourceFiles.AllowUserToResizeRows = false;
+            this.dataGridViewSourceFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridViewSourceFiles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewSourceFiles.Location = new System.Drawing.Point(3, 3);
             this.dataGridViewSourceFiles.Name = "dataGridViewSourceFiles";
@@ -277,6 +284,9 @@ namespace DirectoryCompare.UI
             // dataGridViewCompareFiles
             // 
             this.dataGridViewCompareFiles.AllowUserToResizeRows = false;
+            this.dataGridViewCompareFiles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridViewCompareFiles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewCompareFiles.Location = new System.Drawing.Point(3, 3);
             this.dataGridViewCompareFiles.Name = "dataGridViewCompareFiles";
@@ -294,6 +304,7 @@ namespace DirectoryCompare.UI
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "Directory Compare";
